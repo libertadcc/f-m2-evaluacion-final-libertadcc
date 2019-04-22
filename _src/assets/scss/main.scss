@@ -57,11 +57,9 @@ body {
 }
 
 .fav__serie{
-  background: $purple;
+  background:$purple;
   color: $blue;
   list-style: none;
-  display: flex;
-  flex-direction: row;
   justify-content: center;
   text-align: center;
   font-family: $rubik;
@@ -86,12 +84,18 @@ body {
   grid-gap: 20px;
   }
 }
-.result__serie{
-  background: $blue;
-  color: $purple;
-  text-align: center;
-  font-family: $rubik;
-  font-size: 18px;
+.results{
+  .result__serie{
+    background: $blue;
+    color: $purple;
+    text-align: center;
+    font-family: $rubik;
+    font-size: 18px;
+    margin: 10px;
+    .fav__serie {
+      background:$purple;
+      color: $blue;
+    }
+  }
 }
-
 
