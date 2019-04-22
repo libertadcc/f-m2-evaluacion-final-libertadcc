@@ -36,8 +36,6 @@ function search(){
           img.setAttribute('alt', `Portada de ${serie.name}`);
         }
 
-
-
         item.addEventListener('click', fav);
 
         title.appendChild(contName);
@@ -55,29 +53,40 @@ btn.addEventListener('click', search);
 //A la funcion fav hay que meterle un parámetro que serán los objetos de cuando se selecciona una peli
 function fav(){
   const allSeries = document.querySelectorAll('.result__serie');
-  for(let each of allSeries){
+  //for(let each of allSeries){
   //Selecciona fav y le añade la clase
-    const favSerie = event.currentTarget;
-    favSerie.classList.add('fav__serie');
-    //console.log(favSerie);
+  const favSerie = event.currentTarget;
+  favSerie.classList.add('fav__serie');
 
+  //Añadir las clases fav__title / fav__img
+  const favTitle = event.currentTarget.firstChild;
+  favTitle.classList.add('fav__title');
 
-    //Añadir las clases fav__title / fav__img
-    const favTitle = event.currentTarget.firstChild;
-    favTitle.classList.add('fav__title');
-    //console.log(favTitle);
-    const favImg = event.currentTarget.lastChild;
-    favImg.classList.add('fav__img');
+  const favImg = event.currentTarget.lastChild;
+  favImg.classList.add('fav__img');
 
-    //Hacemos objeto
-    console.log(favTitle.innerHTML);
-    const obj = {title: `${favTitle.innerHTML}`,
-      photo: `${favImg.ge}`};//de aquí coger el atributo src
-    console.log('!!!!!', obj);
+  //Hacemos objeto
+  console.log(favTitle.innerHTML);
+  const obj = {title: `${favTitle.innerHTML}`,
+    photo: `${favImg.src}`};
+  console.log('!!!!!', obj);
 
-    const favResult = document.querySelector('.fav__result');
+  const arrayList = arrFav.push(obj);
+  const arrTitle = document.createElement('h4');
+  const arrTitleCont = document.createTextNode(`${obj.title}`);
+  const arrImg = document.createElement('img');
+  arrImg.setAttribute('src', `${obj.photo}`);
 
+  const favResult = document.querySelector('.fav__result');
+  const favList = document.createElement('li');
+
+  arrTitle.appendChild(arrTitleCont);
+  favList.appendChild(arrTitle);
+  favList.appendChild(arrImg);
+
+  //favList.appendChild(arrayList);
+  favResult.appendChild(favList);
   //Crear un array con los títulos seleccionados y meterlo en favResult
   //}
-  }
+  //} del bucle
 }
