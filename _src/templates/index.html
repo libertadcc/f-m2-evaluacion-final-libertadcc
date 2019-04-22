@@ -3,21 +3,22 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Buscador de series</title>
-  <link rel="icon" href="favicon.png"/>
+  <link rel="icon" href="tvicon.png"/>
   <link rel="stylesheet" href="assets/css/main.css">
+  <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
 </head>
 <body>
-  <div>
-    <h1 class="title">Buscador de series</h1>
-    <input class="input">
-    <button class="btn">Buscar</button>
-    <div class="my__series">
-      <!-- <ul class="fav__result"></ul> -->
+  <h1 class="title">Buscador de series</h1>
+  <div class="page">
+    <div class="search">
+      <input class="input" placeholder="Título"> 
+      <button class="btn">Buscar</button>
+      <div class="my__series"></div>
     </div>
-    <!-- Añadir un título de lista de favoritos, quizás con innerHTML -->
-  </div>
-  <div>
-    <ol class="results"></ol>
+
+    <div>
+      <ol class="results"></ol>
+    </div>
   </div>
   <script src="assets/js/main.js"></script>
 </body>

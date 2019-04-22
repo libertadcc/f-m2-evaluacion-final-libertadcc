@@ -82,7 +82,8 @@ function fav(){
   const arrTitle = document.createElement('h4');
   arrTitle.classList.add('my__title');
   const arrImg = document.createElement('img');
-  arrImg.classList.add('my_image');
+  arrImg.classList.add('my__image');
+  // my_image o my__image, no cambia a doble barrabaja
 
   const myTitleCont = document.createTextNode('Mis series favoritas'); //se repite
   const arrTitleCont = document.createTextNode(`${obj.title}`);
@@ -115,7 +116,7 @@ function print(){
       const arrTitle = document.createElement('h4');
       arrTitle.classList.add('my__title');
       const arrImg = document.createElement('img');
-      arrImg.classList.add('my_image');
+      arrImg.classList.add('my__image');
 
       const myTitleCont = document.createTextNode('Mis series favoritas'); //se repite
       const arrTitleCont = document.createTextNode(`${nuevo[x].title}`);
