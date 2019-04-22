@@ -5,8 +5,9 @@ const url = 'http://api.tvmaze.com/search/shows?q=';
 const btn = document.querySelector('.btn');
 const input = document.querySelector('.input');
 const results = document.querySelector('.results');
-
 const arrFav = []; //EN este array tenemos que meter los objetos
+  // NO ESTÁN METIDOS LOS OBJETOS!!!!
+
 
 // <------  Search series
 function search(){
@@ -50,11 +51,7 @@ function search(){
 btn.addEventListener('click', search);
 
 //<---- Favourite series
-//A la funcion fav hay que meterle un parámetro que serán los objetos de cuando se selecciona una peli
 function fav(){
-  const allSeries = document.querySelectorAll('.result__serie');
-  //for(let each of allSeries){
-  //Selecciona fav y le añade la clase
   const favSerie = event.currentTarget;
   favSerie.classList.add('fav__serie');
 
@@ -66,16 +63,20 @@ function fav(){
   favImg.classList.add('fav__img');
 
   //Hacemos objeto
-  console.log(favTitle.innerHTML);
   const obj = {title: `${favTitle.innerHTML}`,
     photo: `${favImg.src}`};
-  console.log('!!!!!', obj);
+  saveData();
+  
+  arrFav.push(obj);
+  console.log('!!', arrFav);
+  //En un array (?). No, se van sustituyendo los objetos, no añadiendo
 
-  const arrayList = arrFav.push(obj);
+  //Este objeto debería ir en un array!!!
   const arrTitle = document.createElement('h4');
   const arrTitleCont = document.createTextNode(`${obj.title}`);
   const arrImg = document.createElement('img');
   arrImg.setAttribute('src', `${obj.photo}`);
+  arrImg.setAttribute('alt', `Portada de ${obj.title}`);
 
   const favResult = document.querySelector('.fav__result');
   const favList = document.createElement('li');
@@ -84,9 +85,10 @@ function fav(){
   favList.appendChild(arrTitle);
   favList.appendChild(arrImg);
 
-  //favList.appendChild(arrayList);
   favResult.appendChild(favList);
-  //Crear un array con los títulos seleccionados y meterlo en favResult
-  //}
-  //} del bucle
+}
+
+// <----- Save (LocalStorage)
+function saveData(){
+  localStorage.setItem('favSeries', JSON.stringify(arrFav));
 }
