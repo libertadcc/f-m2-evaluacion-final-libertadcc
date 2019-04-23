@@ -11,7 +11,6 @@ const btnDelete = document.querySelector('.btn__delete');
 
 let arrFav = [];
 
-// <------  Search series. Esta función pinta en la pantalla todos los resultados de las búsquedas
 function search(){
   fetch(`${url}${input.value}`)
     .then(response => response.json())
@@ -52,23 +51,17 @@ function search(){
 
 btn.addEventListener('click', search);
 
-
-//<---- Favourite series. Añade a las seleccionadas una clase para que se pinten distinto
-
-//También mete en el array los objetos seleccionados y los guarda en el localStorage
 function fav(){
 
   const favSerie = event.currentTarget;
   favSerie.classList.add('fav__serie');
 
-  //Añadir las clases fav__title / fav__img
   const favTitle = event.currentTarget.firstChild;
   favTitle.classList.add('fav__title');
 
   const favImg = event.currentTarget.lastChild;
   favImg.classList.add('fav__img');
 
-  //Hacemos objeto
   const obj = {title: `${favTitle.innerHTML}`, photo: `${favImg.src}`};
   arrFav.push(obj);
   
@@ -77,7 +70,6 @@ function fav(){
   draw(arrFav);
 }
 
-// draw() pinta la lista de favoritos de la izquierda
 function draw(arr){
   mySeriesTitle.classList.remove('hidden');
   btnDelete.classList.remove('hidden');
@@ -110,18 +102,13 @@ function draw(arr){
 
     mySeries.appendChild(favResult);
 
-    iconX.addEventListener('click', borrar);
-
+    iconX.addEventListener('click', clean);
   }
 }
-
-
-// <----- Save Data (LocalStorage)
 
 function saveData(){
   localStorage.setItem('favSeries', JSON.stringify(arrFav));
 }
-
 
 function deleteLocalStorage(){
   localStorage.removeItem('favSeries');
@@ -133,27 +120,20 @@ function deleteLocalStorage(){
 
 btnDelete.addEventListener('click', deleteLocalStorage);
 
-// <---- Print localStorage
 function printFav(){
   const nuevo = JSON.parse(localStorage.getItem('favSeries'));
   if(nuevo !== null) {
     arrFav=nuevo;
     draw(arrFav);
-    console.log(arrFav);
-    console.log('Hay series favoritas guardadas');
   }else{
-    //draw(nuevo);
     mySeriesTitle.classList.add('hidden');
     btnDelete.classList.add('hidden');
-    console.log('Aún no hay series favoritas guardadas');
   }
 }
 
 window.addEventListener('load', printFav);
 
-// // <----- Delete fav
-// //Al clicar la X borrar de la lista de favoritos///Revisar esto porque no se cómo borrar solo un elemento del localStorage
-function borrar(){
+function clean(){
   const click = event.currentTarget;
   const clickP = click.parentElement;
   clickP.remove(click);
