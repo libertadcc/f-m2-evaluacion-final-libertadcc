@@ -15,7 +15,7 @@ body {
   width: 100vw;
   text-align: center;
   font-size: 42px;
-  padding-top:30px;
+  padding-top: 30px;
 }
 
 .page {
@@ -49,44 +49,37 @@ body {
   color: white;
 }
 
-.my__series{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
-}
-
-.my__image {
-  width: 80px;
-  @media all and (min-width:768px){
-    width: 100px;
-  }
-}
 .results{
   display: flex;
   flex-direction: column;
   list-style: none;
   padding: 0;
-  @media all and(min-width: 768px){
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: auto;
-  grid-gap: 20px;
-  }
+    @media all and(min-width: 768px){
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-gap: 20px;
+    }
+    @media all and(min-width:1024px){
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: auto;
+      grid-gap: 20px;
+      }
 }
 
-  .result__serie{
-    background: $blue;
-    color: $purple;
-    text-align: center;
-    font-family: $rubik;
-    font-size: 18px;
-    margin: 10px;
-    .fav__serie {
-      background:$purple;
-      color: $blue;
-    }
+.result__serie{
+  background: $blue;
+  color: $purple;
+  text-align: center;
+  font-family: $rubik;
+  font-size: 18px;
+  margin: 10px;
+  .fav__serie {
+    background:$purple;
+    color: $blue;
   }
+}
 
 .fav__serie{
   background:$purple;
@@ -99,3 +92,32 @@ body {
   padding: 10px;
 }
 
+.my__series{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  padding: 0;
+  .fav__serie {
+    background: $bluewhite;
+    color: $purple;
+  }
+}
+.my__serie{
+  display: flex;
+}
+.my__title{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 15px;
+}
+
+.my__image {
+  width: auto;
+  height: 200px;
+}
+.my__icon{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

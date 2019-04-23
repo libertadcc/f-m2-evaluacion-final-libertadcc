@@ -5,10 +5,7 @@ const url = 'http://api.tvmaze.com/search/shows?q=';
 const btn = document.querySelector('.btn');
 const input = document.querySelector('.input');
 const results = document.querySelector('.results');
-let arrFav = []; //EN este array tenemos que meter los objetos
-// NO ESTÁN METIDOS LOS OBJETOS!!!!
-
-const mySeries = document.querySelector('.my__series');
+let arrFav = [];
 
 // <------  Search series
 function search(){
@@ -51,6 +48,9 @@ function search(){
 
 btn.addEventListener('click', search);
 
+const mySeries = document.querySelector('.my__series');
+
+
 //<---- Favourite series
 function fav(){
   const favSerie = event.currentTarget;
@@ -69,12 +69,8 @@ function fav(){
 
   arrFav.push(obj);
   saveData();
-  console.log('!!', arrFav); //¿Esto es array, no?
-  //En un array (?). No, se van sustituyendo los objetos, no añadiendo
-  //Este objeto debería ir en un array!!!
 
   ///Pintar lista de favoritos
-  const myTitle = document.createElement('h3'); //el que se repite
   const favResult = document.createElement('ul');
   favResult.classList.add('fav__serie');
   const favList = document.createElement('li');
@@ -83,20 +79,23 @@ function fav(){
   arrTitle.classList.add('my__title');
   const arrImg = document.createElement('img');
   arrImg.classList.add('my__image');
-  // my_image o my__image, no cambia a doble barrabaja
 
-  const myTitleCont = document.createTextNode('Mis series favoritas'); //se repite
   const arrTitleCont = document.createTextNode(`${obj.title}`);
+
+  const iconX = document.createElement('span');
+  iconX.classList.add('my__icon');
+  iconX.innerHTML= '<i class="fas fa-times-circle"></i>';
+
   arrImg.setAttribute('src', `${obj.photo}`);
   arrImg.setAttribute('alt', `Portada de ${obj.title}`);
-
-  myTitle.appendChild(myTitleCont); //no lo estoy pintando porque se repite
+ 
   arrTitle.appendChild(arrTitleCont);
-  favList.appendChild(arrTitle);
   favList.appendChild(arrImg);
+  favList.appendChild(arrTitle);
+  favList.appendChild(iconX);
+  
   favResult.appendChild(favList);
-
-  //mySeries.appendChild(myTitle); //El 'mis series favoritas se repite cada vez
+  
   mySeries.appendChild(favResult);
 }
 
@@ -108,33 +107,40 @@ function print(){
   const nuevo = JSON.parse(localStorage.getItem('favSeries'));
   if(nuevo !== null) {
     for(let x=0; x<nuevo.length; x++){
-      const myTitle = document.createElement('h3'); //el que se repite
+      const myTitle = document.createElement('h3');
       const favResult = document.createElement('ul');
       favResult.classList.add('fav__serie');
       const favList = document.createElement('li');
       favList.classList.add('my__serie');
+
       const arrTitle = document.createElement('h4');
       arrTitle.classList.add('my__title');
       const arrImg = document.createElement('img');
       arrImg.classList.add('my__image');
 
-      const myTitleCont = document.createTextNode('Mis series favoritas'); //se repite
+      const myTitleCont = document.createTextNode('Mis series favoritas');
       const arrTitleCont = document.createTextNode(`${nuevo[x].title}`);
+      
+      const iconX = document.createElement('span');
+      iconX.classList.add('my__icon');
+      iconX.innerHTML= '<i class="fas fa-times-circle"></i>';
+      
       arrImg.setAttribute('src', `${nuevo[x].photo}`);
       arrImg.setAttribute('alt', `Portada de ${nuevo[x].title}`);
-
-      myTitle.appendChild(myTitleCont); //no lo estoy pintando porque se repite
+      myTitle.appendChild(myTitleCont);
       arrTitle.appendChild(arrTitleCont);
-      favList.appendChild(arrTitle);
       favList.appendChild(arrImg);
+      favList.appendChild(arrTitle);
+      favList.appendChild(iconX);
+
       favResult.appendChild(favList);
 
-      //mySeries.appendChild(myTitle); //El 'mis series favoritas se repite cada vez
       mySeries.appendChild(favResult);
     }
-  } else {
-    console.log('ecooooo o');
   }
 }
 
 window.addEventListener('load', print);
+
+// <----- Delete fav
+// Poner una equis tras el nombre en la lista de favo
