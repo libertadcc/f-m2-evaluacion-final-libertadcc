@@ -11,7 +11,7 @@ const btnDelete = document.querySelector('.btn__delete');
 
 let arrFav = [];
 
-// <------  Search series
+// <------  Search series. Esta función pinta en la pantalla todos los resultados de las búsquedas
 function search(){
   fetch(`${url}${input.value}`)
     .then(response => response.json())
@@ -53,12 +53,10 @@ function search(){
 btn.addEventListener('click', search);
 
 
+//<---- Favourite series. Añade a las seleccionadas una clase para que se pinten distinto
 
-
-//<---- Favourite series
+//También mete en el array los objetos seleccionados y los guarda en el localStorage
 function fav(){
-  mySeriesTitle.classList.remove('hidden');
-  btnDelete.classList.remove('hidden');
 
   const favSerie = event.currentTarget;
   favSerie.classList.add('fav__serie');
@@ -71,112 +69,92 @@ function fav(){
   favImg.classList.add('fav__img');
 
   //Hacemos objeto
-  const obj = {title: `${favTitle.innerHTML}`,
-    photo: `${favImg.src}`};
-
+  const obj = {title: `${favTitle.innerHTML}`, photo: `${favImg.src}`};
   arrFav.push(obj);
+  
   saveData();
 
-  ///Pintar lista de favoritos
-  const favResult = document.createElement('ul');
-  favResult.classList.add('fav__serie');
-  const favList = document.createElement('li');
-  favList.classList.add('my__serie');
-  const arrTitle = document.createElement('h4');
-  arrTitle.classList.add('my__title');
-  const arrImg = document.createElement('img');
-  arrImg.classList.add('my__image');
-
-  const arrTitleCont = document.createTextNode(`${obj.title}`);
-
-  const iconX = document.createElement('span');
-  iconX.classList.add('my__icon');
-  iconX.innerHTML= '<i class="fas fa-times-circle"></i>';
-
-  arrImg.setAttribute('src', `${obj.photo}`);
-  arrImg.setAttribute('alt', `Portada de ${obj.title}`);
-
-  arrTitle.appendChild(arrTitleCont);
-  favList.appendChild(arrImg);
-  favList.appendChild(arrTitle);
-  favList.appendChild(iconX);
-
-  favResult.appendChild(favList);
-
-  mySeries.appendChild(favResult);
-
-  iconX.addEventListener('click', deletefav);
+  draw(arrFav);
 }
 
+// draw() pinta la lista de favoritos de la izquierda
+function draw(arr){
+  mySeriesTitle.classList.remove('hidden');
+  btnDelete.classList.remove('hidden');
+  mySeries.innerHTML='';
+
+  for(let y = 0; y<arr.length; y++){
+    const favResult = document.createElement('ul');
+    favResult.classList.add('fav__serie');
+    const favList = document.createElement('li');
+    favList.classList.add('my__serie');
+    const arrTitle = document.createElement('h4');
+    arrTitle.classList.add('my__title');
+    const arrImg = document.createElement('img');
+    arrImg.classList.add('my__image');
+    const iconX = document.createElement('span');
+    iconX.classList.add('my__icon');
+    const arrTitleCont = document.createTextNode(`${arr[y].title}`);
+
+    iconX.innerHTML= '<i class="fas fa-times-circle"></i>';
+
+    arrImg.setAttribute('src', `${arr[y].photo}`);
+    arrImg.setAttribute('alt', `Portada de ${arr[y].title}`);
+  
+    arrTitle.appendChild(arrTitleCont);
+    favList.appendChild(arrImg);
+    favList.appendChild(arrTitle);
+    favList.appendChild(iconX);
+
+    favResult.appendChild(favList);
+
+    mySeries.appendChild(favResult);
+  }
+}
+
+
 // <----- Save Data (LocalStorage)
+
 function saveData(){
   localStorage.setItem('favSeries', JSON.stringify(arrFav));
 }
 
+
+function deleteLocalStorage(){
+  localStorage.removeItem('favSeries');
+  mySeries.innerHTML='';
+  mySeriesTitle.classList.add('hidden');
+  btnDelete.classList.add('hidden');
+  arrFav = [];
+}
+
+btnDelete.addEventListener('click', deleteLocalStorage);
+
 // <---- Print localStorage
-function print(arr){
+function printFav(){
   const nuevo = JSON.parse(localStorage.getItem('favSeries'));
   if(nuevo !== null) {
-    mySeriesTitle.classList.remove('hidden');
-    btnDelete.classList.remove('hidden');
-
-    for(let x=0; x<nuevo.length; x++){
-      const myTitle = document.createElement('h3');
-      const favResult = document.createElement('ul');
-      favResult.classList.add('fav__serie');
-      const favList = document.createElement('li');
-      favList.classList.add('my__serie');
-
-      const arrTitle = document.createElement('h4');
-      arrTitle.classList.add('my__title');
-      const arrImg = document.createElement('img');
-      arrImg.classList.add('my__image');
-
-      const myTitleCont = document.createTextNode('Mis series favoritas');
-      const arrTitleCont = document.createTextNode(`${nuevo[x].title}`);
-
-      // Add icon
-      const iconX = document.createElement('span');
-      iconX.classList.add('my__icon');
-      iconX.innerHTML= '<i class="fas fa-times-circle"></i>';
-
-      arrImg.setAttribute('src', `${nuevo[x].photo}`);
-      arrImg.setAttribute('alt', `Portada de ${nuevo[x].title}`);
-      myTitle.appendChild(myTitleCont);
-      arrTitle.appendChild(arrTitleCont);
-      favList.appendChild(arrImg);
-      favList.appendChild(arrTitle);
-      favList.appendChild(iconX);
-
-      favResult.appendChild(favList);
-
-      mySeries.appendChild(favResult);
-
-      iconX.addEventListener('click', deletefav);
-      console.log('Hay series favoritas guardadas');
-    }
-  } else {
+    arrFav=nuevo;
+    draw(arrFav);
+    console.log(arrFav);
+    console.log('Hay series favoritas guardadas');
+  }else{
+    //draw(nuevo);
+    mySeriesTitle.classList.add('hidden');
+    btnDelete.classList.add('hidden');
     console.log('Aún no hay series favoritas guardadas');
   }
 }
 
-window.addEventListener('load', print(arrFav));
+window.addEventListener('load', printFav);
 
-// <----- Delete fav
-//Al clicar la X borrar de la lista de favoritos///Revisar esto porque no se cómo borrar solo un elemento del localStorage
-function deletefav(event){
-  const clicked = event.currentTarget;
-  const clickedLi = clicked.parentElement;
-  clickedLi.classList.add('hidden');
-  localStorage.removeItem('event');
-}
+// // <----- Delete fav
+// //Al clicar la X borrar de la lista de favoritos///Revisar esto porque no se cómo borrar solo un elemento del localStorage
+// function deletefav(event){
+//   const clicked = event.currentTarget;
+//   const clickedLi = clicked.parentElement;
+//   clickedLi.classList.add('hidden');
+//   localStorage.removeItem('event');
+// }
 
-function deleteLocalStorage(){
-  localStorage.clear();
-  print(arrFav);
-  mySeriesTitle.classList.add('hidden');
-  mySeries.classList.add('hidden');
-  btnDelete.classList.add('hidden');
-
-}
-btnDelete.addEventListener('click', deleteLocalStorage);
+//iconX.addEventListener('click', deletefav); //Esto iba antes pero no va nada, así que pongo donde quieras
