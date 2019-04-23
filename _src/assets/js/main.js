@@ -6,6 +6,7 @@ const btn = document.querySelector('.btn');
 const input = document.querySelector('.input');
 const results = document.querySelector('.results');
 const mySeriesTitle = document.querySelector('.my__series-title');
+const mySeries = document.querySelector('.my__series');
 const btnDelete = document.querySelector('.btn__delete');
 
 let arrFav = [];
@@ -51,7 +52,7 @@ function search(){
 
 btn.addEventListener('click', search);
 
-const mySeries = document.querySelector('.my__series');
+
 
 
 //<---- Favourite series
@@ -113,12 +114,12 @@ function saveData(){
 }
 
 // <---- Print localStorage
-function print(){
+function print(arr){
   const nuevo = JSON.parse(localStorage.getItem('favSeries'));
   if(nuevo !== null) {
     mySeriesTitle.classList.remove('hidden');
     btnDelete.classList.remove('hidden');
-    
+
     for(let x=0; x<nuevo.length; x++){
       const myTitle = document.createElement('h3');
       const favResult = document.createElement('ul');
@@ -152,20 +153,30 @@ function print(){
       mySeries.appendChild(favResult);
 
       iconX.addEventListener('click', deletefav);
+      console.log('Hay series favoritas guardadas');
     }
+  } else {
+    console.log('Aún no hay series favoritas guardadas');
   }
 }
 
-window.addEventListener('load', print);
+window.addEventListener('load', print(arrFav));
 
 // <----- Delete fav
 //Al clicar la X borrar de la lista de favoritos///Revisar esto porque no se cómo borrar solo un elemento del localStorage
 function deletefav(event){
   const clicked = event.currentTarget;
   const clickedLi = clicked.parentElement;
-  clickedLi.classList.add('bye');
+  clickedLi.classList.add('hidden');
   localStorage.removeItem('event');
 }
 
+function deleteLocalStorage(){
+  localStorage.clear();
+  print(arrFav);
+  mySeriesTitle.classList.add('hidden');
+  mySeries.classList.add('hidden');
+  btnDelete.classList.add('hidden');
 
-
+}
+btnDelete.addEventListener('click', deleteLocalStorage);
