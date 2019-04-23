@@ -109,6 +109,9 @@ function draw(arr){
     favResult.appendChild(favList);
 
     mySeries.appendChild(favResult);
+
+    iconX.addEventListener('click', borrar);
+
   }
 }
 
@@ -150,11 +153,8 @@ window.addEventListener('load', printFav);
 
 // // <----- Delete fav
 // //Al clicar la X borrar de la lista de favoritos///Revisar esto porque no se cómo borrar solo un elemento del localStorage
-// function deletefav(event){
-//   const clicked = event.currentTarget;
-//   const clickedLi = clicked.parentElement;
-//   clickedLi.classList.add('hidden');
-//   localStorage.removeItem('event');
-// }
-
-//iconX.addEventListener('click', deletefav); //Esto iba antes pero no va nada, así que pongo donde quieras
+function borrar(){
+  const click = event.currentTarget;
+  const clickP = click.parentElement;
+  clickP.remove(click);
+}
