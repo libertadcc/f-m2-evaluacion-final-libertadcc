@@ -120,4 +120,13 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  cursor: pointer;
+}
+.bye{
+  display: none;
+}
+
+.btn__delete{
+  width: 80px;
+  color: red;
 }

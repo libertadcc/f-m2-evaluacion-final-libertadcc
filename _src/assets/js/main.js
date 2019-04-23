@@ -88,21 +88,25 @@ function fav(){
 
   arrImg.setAttribute('src', `${obj.photo}`);
   arrImg.setAttribute('alt', `Portada de ${obj.title}`);
- 
+
   arrTitle.appendChild(arrTitleCont);
   favList.appendChild(arrImg);
   favList.appendChild(arrTitle);
   favList.appendChild(iconX);
-  
+
   favResult.appendChild(favList);
-  
+
   mySeries.appendChild(favResult);
+
+  iconX.addEventListener('click', deletefav);
 }
 
 // <----- Save Data (LocalStorage)
 function saveData(){
   localStorage.setItem('favSeries', JSON.stringify(arrFav));
 }
+
+// <---- Print localStorage
 function print(){
   const nuevo = JSON.parse(localStorage.getItem('favSeries'));
   if(nuevo !== null) {
@@ -120,11 +124,12 @@ function print(){
 
       const myTitleCont = document.createTextNode('Mis series favoritas');
       const arrTitleCont = document.createTextNode(`${nuevo[x].title}`);
-      
+
+      // Add icon
       const iconX = document.createElement('span');
       iconX.classList.add('my__icon');
       iconX.innerHTML= '<i class="fas fa-times-circle"></i>';
-      
+
       arrImg.setAttribute('src', `${nuevo[x].photo}`);
       arrImg.setAttribute('alt', `Portada de ${nuevo[x].title}`);
       myTitle.appendChild(myTitleCont);
@@ -136,6 +141,8 @@ function print(){
       favResult.appendChild(favList);
 
       mySeries.appendChild(favResult);
+
+      iconX.addEventListener('click', deletefav);
     }
   }
 }
@@ -143,4 +150,13 @@ function print(){
 window.addEventListener('load', print);
 
 // <----- Delete fav
-// Poner una equis tras el nombre en la lista de favo
+//Al clicar la X borrar de la lista de favoritos///Revisar esto porque no se cómo borrar solo un elemento del localStorage
+function deletefav(event){
+  const clicked = event.currentTarget;
+  const clickedLi = clicked.parentElement;
+  clickedLi.classList.add('bye');
+  localStorage.removeItem('event');
+}
+
+
+
