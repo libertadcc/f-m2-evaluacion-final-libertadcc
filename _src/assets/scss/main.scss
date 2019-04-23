@@ -47,6 +47,24 @@ body {
   font-size: 16px;
   background: $purple;
   color: white;
+  cursor: pointer;
+  &:active{
+    background: $blue;
+    color: $purple;
+  }
+}
+
+.btn__delete {
+  width: 280px;
+  height: 40px;
+  color: $purple;
+  font-family: $rubik;
+  font-size: 20px;
+  cursor: pointer;
+  &:active{
+    background: $purple;
+    color: white;
+  }
 }
 
 .results{
@@ -126,7 +144,10 @@ body {
   display: none;
 }
 
-.btn__delete{
-  width: 80px;
-  color: red;
+.my__series-title{
+  color: black;
+  font-size: 18px;
+}
+.hidden{
+  display: none;
 }

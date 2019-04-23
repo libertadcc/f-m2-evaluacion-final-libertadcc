@@ -5,6 +5,9 @@ const url = 'http://api.tvmaze.com/search/shows?q=';
 const btn = document.querySelector('.btn');
 const input = document.querySelector('.input');
 const results = document.querySelector('.results');
+const mySeriesTitle = document.querySelector('.my__series-title');
+const btnDelete = document.querySelector('.btn__delete');
+
 let arrFav = [];
 
 // <------  Search series
@@ -53,6 +56,9 @@ const mySeries = document.querySelector('.my__series');
 
 //<---- Favourite series
 function fav(){
+  mySeriesTitle.classList.remove('hidden');
+  btnDelete.classList.remove('hidden');
+
   const favSerie = event.currentTarget;
   favSerie.classList.add('fav__serie');
 
@@ -110,6 +116,9 @@ function saveData(){
 function print(){
   const nuevo = JSON.parse(localStorage.getItem('favSeries'));
   if(nuevo !== null) {
+    mySeriesTitle.classList.remove('hidden');
+    btnDelete.classList.remove('hidden');
+    
     for(let x=0; x<nuevo.length; x++){
       const myTitle = document.createElement('h3');
       const favResult = document.createElement('ul');
