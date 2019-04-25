@@ -8,14 +8,16 @@ const results = document.querySelector('.results');
 const mySeriesTitle = document.querySelector('.my__series-title');
 const mySeries = document.querySelector('.my__series');
 const btnDelete = document.querySelector('.btn__delete');
+const number = document.querySelector('.number');
 
 let arrFav = [];
-
+const arrayNumber = [5, 8, 10];
 function search(){
   fetch(`${url}${input.value}`)
     .then(response => response.json())
     .then(data => {
       results.innerHTML='';
+      number.innerHTML=data.length;
       for(let i = 0; i<data.length; i++){
         const item = document.createElement('li');
         item.classList.add('result__serie');
@@ -24,10 +26,13 @@ function search(){
         title.classList.add('result__title');
         const img = document.createElement('img');
         img.classList.add('result__img');
+        const year = document.createElement('time');
+        year.classList.add('result__year');
 
         const serie = data[i].show;
         const contName = document.createTextNode(`${serie.name}`);
-
+        const contYear = document.createTextNode(`${serie.premiered}`);
+        
         if(serie.image === null){
           img.setAttribute('src', 'https://via.placeholder.com/210x295/ffffff/666666/?text=TV');
           item.appendChild(img);
@@ -42,15 +47,25 @@ function search(){
 
         title.appendChild(contName);
         item.appendChild(title);
+        year.appendChild(contYear);
 
         item.appendChild(img);
+        item.appendChild(year);
         results.appendChild(item);
       }
     });
 }
-
+function compare(){
+  for (let w = 0; w<arrayNumber.length; w++){
+    if (parseInt(number.innerHTML) >= arrayNumber[w]){
+      console.log(`Hay ${number.innerHTML} resultados y es mayor o igual que ${arrayNumber[w]}`);
+    } else {
+      console.log(`Hay ${number.innerHTML} resultados y es menor que ${arrayNumber[w]}`);
+    }
+  }
+}
 btn.addEventListener('click', search);
-
+number.addEventListener('click', compare);
 function fav(){
 
   const favSerie = event.currentTarget;
